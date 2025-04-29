@@ -1,0 +1,29 @@
+name: Go CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ソースをチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Go をセットアップ
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
+
+      - name: モジュールを取得
+        run: go mod tidy
+
+      - name: ビルド確認
+        run: go build ./...
+
+      - name: テスト実行
+        run: go test ./... -v
