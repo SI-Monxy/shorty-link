@@ -17,7 +17,7 @@ func NewInteractor(r domain.Repository, p OutputPort) *Interactor {
 	return &Interactor{repo: r, pres: p}
 }
 
-func (i *Interactor) Execute(input ShortenInput) (*ShortenOutput, error) {
+func (i *Interactor) Shorten(input ShortenInput) (*ShortenOutput, error) {
 	code := generateCode(6)
 	entity := &domain.ShortURL{
 		Code:        code,
@@ -27,7 +27,7 @@ func (i *Interactor) Execute(input ShortenInput) (*ShortenOutput, error) {
 		return nil, err
 	}
 	output := &ShortenOutput{ShortURL: fmt.Sprintf("http://localhost:8080/%s", code)}
-	return i.pres.Present(output), nil
+	return i.pres.PresentShorten(output), nil
 }
 
 func generateCode(length int) string {
@@ -38,4 +38,13 @@ func generateCode(length int) string {
 		b[i] = charset[rand.Intn(len(charset))]
 	}
 	return string(b)
+}
+
+func (i *Interactor) Redirect(input RedirectInput) (*RedirectOutput, error) {
+	entity, err := i.repo.FindByCode(input.Code)
+	if err != nil {
+		return nil, err
+	}
+	output := &RedirectOutput{OriginalURL: entity.OriginalURL}
+	return i.pres.PresentRedirect(output), nil
 }
