@@ -46,6 +46,22 @@ HTTP/1.1 302 Found
 Location: https://example.com
 ```
 
+## 📚 APIドキュメント（Swagger）
+
+このAPIは Swagger（OpenAPI） を導入しており、ブラウザ上から仕様を確認できます。
+
+- Swagger UI: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
+
+### 使用ライブラリ
+
+- [swaggo/swag](https://github.com/swaggo/swag)
+- [swaggo/gin-swagger](https://github.com/swaggo/gin-swagger)
+
+### ドキュメント生成コマンド
+
+```bash
+swag init --dir ./cmd/server,./internal/interface/handler/http --output ./docs --parseDependency --parseInternal
+```
 
 ## 🛠 ローカル環境構築
 ```
