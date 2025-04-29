@@ -25,5 +25,8 @@ func (r *ShortURLRepository) FindByCode(code string) (*shorturl.ShortURL, error)
 	if err := r.db.Where("code = ?", code).First(&m).Error; err != nil {
 		return nil, err
 	}
-	return &shorturl.ShortURL{Code: m.Code, OriginalURL: m.OriginalURL}, nil
+	return &shorturl.ShortURL{
+		Code:        m.Code,
+		OriginalURL: m.OriginalURL,
+	}, nil
 }
