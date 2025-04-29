@@ -4,3 +4,7 @@ package shorturl
 type ShortenInput struct {
 	OriginalURL string `json:"original_url"`
 }
+
+type RedirectInput struct {
+	Code string
+}
