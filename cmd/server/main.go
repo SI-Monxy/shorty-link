@@ -1,5 +1,11 @@
 package main
 
+// @title shorty-link API
+// @version 1.0
+// @description URL短縮サービスのAPIドキュメント
+// @host localhost:8080
+// @BasePath /
+
 import (
 	"log"
 	"shorty-link/internal/config"
@@ -9,6 +15,10 @@ import (
 	"shorty-link/internal/usecase/shorturl"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "shorty-link/docs"
 )
 
 func main() {
@@ -16,6 +26,7 @@ func main() {
 	db := config.NewDB()
 
 	r := gin.Default()
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// DI (依存性注入)
 	repo := mysql.NewShortURLRepository(db)

@@ -1,0 +1,73 @@
+basePath: /
+definitions:
+  shorturl.ShortenInput:
+    properties:
+      original_url:
+        example: https://example.com
+        type: string
+    type: object
+  shorturl.ShortenOutput:
+    properties:
+      short_url:
+        example: http://localhost:8080/abc123
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: URL短縮サービスのAPIドキュメント
+  title: shorty-link API
+  version: "1.0"
+paths:
+  /{code}:
+    get:
+      parameters:
+      - description: 短縮URLコード
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "302":
+          description: リダイレクト
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 短縮URLから元のURLへリダイレクト
+      tags:
+      - shorturl
+  /api/v1/shorten:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 入力パラメータ
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/shorturl.ShortenInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/shorturl.ShortenOutput'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: URLを短縮する
+      tags:
+      - shorturl
+swagger: "2.0"

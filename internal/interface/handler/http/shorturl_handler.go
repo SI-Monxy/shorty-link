@@ -16,6 +16,15 @@ func NewShortURLHandler(u u.InputPort) *ShortURLHandler {
 	return &ShortURLHandler{usecase: u}
 }
 
+// Shorten godoc
+// @Summary URLを短縮する
+// @Tags shorturl
+// @Accept json
+// @Produce json
+// @Param body body shorturl.ShortenInput true "入力パラメータ"
+// @Success 200 {object} shorturl.ShortenOutput
+// @Failure 400 {object} map[string]string
+// @Router /api/v1/shorten [post]
 func (h *ShortURLHandler) Shorten(c *gin.Context) {
 	var input u.ShortenInput
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -34,6 +43,14 @@ func (h *ShortURLHandler) Shorten(c *gin.Context) {
 	c.JSON(http.StatusOK, output)
 }
 
+// Redirect godoc
+// @Summary 短縮URLから元のURLへリダイレクト
+// @Tags shorturl
+// @Produce plain
+// @Param code path string true "短縮URLコード"
+// @Success 302 {string} string "リダイレクト"
+// @Failure 404 {object} map[string]string
+// @Router /{code} [get]
 func (h *ShortURLHandler) Redirect(c *gin.Context) {
 	code := c.Param("code")
 
