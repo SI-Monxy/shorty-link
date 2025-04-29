@@ -7,3 +7,9 @@ node_modules/
 bin/
 .env
 docker-compose.override.yml
+
+# Terraform local cache
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
