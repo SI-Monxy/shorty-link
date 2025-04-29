@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"shorty-link/internal/infrastructure/db/model"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -25,6 +26,10 @@ func NewDB() *gorm.DB {
 	}
 	if err != nil {
 		log.Fatalf("failed to connect database after retries: %v", err)
+	}
+
+	if err := db.AutoMigrate(&model.ShortURL{}); err != nil {
+		log.Fatalf("failed to migrate: %v", err)
 	}
 
 	return db
