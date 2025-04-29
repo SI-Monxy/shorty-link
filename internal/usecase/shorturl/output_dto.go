@@ -4,3 +4,7 @@ package shorturl
 type ShortenOutput struct {
 	ShortURL string `json:"short_url"`
 }
+
+type RedirectOutput struct {
+	OriginalURL string
+}
