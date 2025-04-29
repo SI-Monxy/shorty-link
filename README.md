@@ -1,5 +1,5 @@
 # 🔗 shorty-link
-※ 下記はGitHub Actions による CI / Lint 結果（main ブランチ）
+※ 下記はGitHub Actions による CI / Test / Lint 結果（main ブランチ）
 
 [![Go CI](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-ci.yml/badge.svg)](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-ci.yml)
 [![Go Test](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-test.yml/badge.svg)](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-test.yml)
