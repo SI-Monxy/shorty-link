@@ -1,5 +1,7 @@
 # 🔗 shorty-link
 
+[![Go CI](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-ci.yml/badge.svg)](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-ci.yml)
+
 短縮URLを生成・管理するAPIサーバーです。Go（Gin）をベースに、**クリーンアーキテクチャ**や**Docker**、**GORM**などのモダンな技術を用いて構築しました。  
 ポートフォリオ・実務力のアピールを目的とした個人開発プロジェクトです。
 
