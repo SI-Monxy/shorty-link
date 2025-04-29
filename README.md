@@ -89,6 +89,7 @@ Shimon Iwata
 
 GitHub: [@SI-Monxy](https://github.com/SI-Monxy)
 
+X: [@SI-Monxy](https://x.com/SI_Monxy)
 
 ## 📄 ライセンス
 MIT License
