@@ -31,11 +31,11 @@ func (i *Interactor) Shorten(input ShortenInput) (*ShortenOutput, error) {
 }
 
 func generateCode(length int) string {
-	rand.Seed(time.Now().UnixNano())
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	b := make([]byte, length)
 	for i := range b {
-		b[i] = charset[rand.Intn(len(charset))]
+		b[i] = charset[r.Intn(len(charset))]
 	}
 	return string(b)
 }
