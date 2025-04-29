@@ -42,3 +42,7 @@ module "alb" {
   alb_sg_id          = module.security_group.alb_sg_id
 }
 
+module "ecr" {
+  source  = "./modules/ecr"
+  project = var.project
+}
