@@ -1,6 +1,6 @@
 package presenter
 
-import u "shorty-link/internal/usecase/shorturl"
+import "shorty-link/internal/usecase/shorturl"
 
 // Presenter実装（OutputPort実装）
 type ShortURLPresenter struct{}
@@ -9,7 +9,10 @@ func NewShortURLPresenter() *ShortURLPresenter {
 	return &ShortURLPresenter{}
 }
 
-func (p *ShortURLPresenter) Present(output *u.ShortenOutput) *u.ShortenOutput {
-	// 本来はここで加工・整形する（今回はそのまま返す）
+func (p *ShortURLPresenter) PresentShorten(output *shorturl.ShortenOutput) *shorturl.ShortenOutput {
+	return output
+}
+
+func (p *ShortURLPresenter) PresentRedirect(output *shorturl.RedirectOutput) *shorturl.RedirectOutput {
 	return output
 }

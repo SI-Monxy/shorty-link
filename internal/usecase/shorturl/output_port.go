@@ -2,5 +2,6 @@ package shorturl
 
 // OutputPort（プレゼンターインターフェース）
 type OutputPort interface {
-	Present(output *ShortenOutput) *ShortenOutput
+	PresentShorten(output *ShortenOutput) *ShortenOutput
+	PresentRedirect(output *RedirectOutput) *RedirectOutput
 }
