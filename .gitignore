@@ -1,0 +1,9 @@
+vendor/
+.DS_Store
+node_modules/
+*.log
+.idea/
+.vscode/
+bin/
+.env
+docker-compose.override.yml
