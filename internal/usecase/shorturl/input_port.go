@@ -2,5 +2,6 @@ package shorturl
 
 // InputPort（ユースケースインターフェース）
 type InputPort interface {
-	Execute(input ShortenInput) (*ShortenOutput, error)
+	Shorten(input ShortenInput) (*ShortenOutput, error)
+	Redirect(input RedirectInput) (*RedirectOutput, error)
 }
