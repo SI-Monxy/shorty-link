@@ -26,7 +26,7 @@ func (h *ShortURLHandler) Shorten(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	output, err := h.usecase.Execute(input)
+	output, err := h.usecase.Shorten(input)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -35,7 +35,14 @@ func (h *ShortURLHandler) Shorten(c *gin.Context) {
 }
 
 func (h *ShortURLHandler) Redirect(c *gin.Context) {
-	// 簡易版：本来はリダイレクト用UseCaseを呼び出すべき
 	code := c.Param("code")
-	c.Redirect(http.StatusFound, "https://example.com/"+code)
+
+	input := u.RedirectInput{Code: code}
+	output, err := h.usecase.Redirect(input)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "URL not found"})
+		return
+	}
+
+	c.Redirect(http.StatusFound, output.OriginalURL)
 }
