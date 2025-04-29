@@ -1,11 +1,12 @@
 # 🔗 shorty-link
+※ 下記はGitHub Actions による CI / Lint 結果（main ブランチ）
 
 [![Go CI](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-ci.yml/badge.svg)](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-ci.yml)
 [![Go Lint](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-lint.yml/badge.svg)](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-lint.yml)
 
-短縮URLを生成・管理するAPIサーバーです。Go（Gin）をベースに、**クリーンアーキテクチャ**や**Docker**、**GORM**などのモダンな技術を用いて構築しました。  
-ポートフォリオ・実務力のアピールを目的とした個人開発プロジェクトです。
+短縮URLを生成・管理するAPIサーバーです。Go（Gin）をベースに、**クリーンアーキテクチャ**や**Docker**、**GORM**などのモダンな技術を用いて構築しました。
 
+本プロジェクトは、**Go×クリーンアーキテクチャ×CI/CD×IaC**のスキル可視化を目的としたポートフォリオ個人開発プロジェクトです。
 
 ## 🚀 特徴・構成
 
@@ -15,7 +16,7 @@
 - ✅ Swagger UIでAPI仕様を可視化
 - ✅ ユニットテスト対応（UseCase／Presenter）
 - ✅ Docker Composeで即時ローカル起動
-- 🔜 GitHub ActionsによるCI/CDパイプライン
+- ✅ GitHub ActionsによるCI/CDパイプライン
 - 🔜 TerraformによるIaC構築
 
 ## ⚙️ 使用技術
@@ -30,7 +31,7 @@
 | 開発環境     | Docker / Docker Compose        |
 | API設計      | REST / Swagger (OpenAPI 2.0)   |
 | テスト       | Go標準 + Testify               |
-| CI/CD        | GitHub Actions（導入予定）     |
+| CI/CD        | GitHub Actions     |
 | IaC          | Terraform（導入予定）          |
 
 
@@ -150,12 +151,21 @@ go test ./internal/usecase/shorturl
 
 ✅ Handler層のGinルーティング含む統合テストも実施可能
 
+## 🔁 CI/CD
+
+本プロジェクトでは GitHub Actions による継続的インテグレーションを導入しています。
+
+- ✅ **go-ci**: ビルドとユニットテストを自動実行
+- ✅ **go-test**: プッシュやPR時に全テストを自動実行
+- ✅ **go-lint**: `staticcheck` による静的解析を自動実行
+
+ワークフローは `.github/workflows` ディレクトリに格納されています。
+
 ## 🧪 今後の実装予定（TODO）
 - カスタム短縮コード対応（任意エイリアス）
 - URLの有効期限設定（TTL）
 - アクセスログ記録（日時/IP/UAなど）
 - アクセス分析API（クリック数の集計）
-- GitHub ActionsによるCI/CDパイプライン
 - TerraformによるIaC構築とCloud環境デプロイ
 
 
