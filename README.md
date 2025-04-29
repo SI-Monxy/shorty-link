@@ -2,6 +2,7 @@
 ※ 下記はGitHub Actions による CI / Lint 結果（main ブランチ）
 
 [![Go CI](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-ci.yml/badge.svg)](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-ci.yml)
+[![Go Test](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-test.yml/badge.svg)](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-test.yml)
 [![Go Lint](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-lint.yml/badge.svg)](https://github.com/SI-Monxy/shorty-link/actions/workflows/go-lint.yml)
 
 短縮URLを生成・管理するAPIサーバーです。Go（Gin）をベースに、**クリーンアーキテクチャ**や**Docker**、**GORM**などのモダンな技術を用いて構築しました。
