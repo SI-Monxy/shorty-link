@@ -1,28 +1,43 @@
 # 🔗 shorty-link
 
-URL短縮サービスをGo（Gin）で構築したポートフォリオ用プロジェクトです。
-クリーンアーキテクチャ・Docker・GORM・MySQL を採用し、今後TerraformやCI/CDも導入予定です。
+短縮URLを生成・管理するAPIサーバーです。Go（Gin）をベースに、**クリーンアーキテクチャ**や**Docker**、**GORM**などのモダンな技術を用いて構築しました。  
+ポートフォリオ・実務力のアピールを目的とした個人開発プロジェクトです。
 
 
-## ✨ 主な技術スタック
+## 🚀 特徴・構成
 
-- Go 1.24
-- Gin（HTTPサーバー）
-- GORM（ORM）
-- MySQL（Docker）
-- Docker / Docker Compose
-- クリーンアーキテクチャ
-- REST API
+- ✅ 短縮URLの生成／リダイレクト
+- ✅ クリーンアーキテクチャによる責務分離
+- ✅ GORM × MySQL によるDB永続化
+- ✅ Swagger UIでAPI仕様を可視化
+- ✅ ユニットテスト対応（UseCase／Presenter）
+- ✅ Docker Composeで即時ローカル起動
+- 🔜 GitHub ActionsによるCI/CDパイプライン
+- 🔜 TerraformによるIaC構築
+
+## ⚙️ 使用技術
+
+| 分類         | 技術                           |
+|--------------|--------------------------------|
+| 言語         | Go 1.24                        |
+| Web          | Gin                            |
+| DB           | MySQL 8（Docker）              |
+| ORM          | GORM                           |
+| アーキテクチャ | クリーンアーキテクチャ         |
+| 開発環境     | Docker / Docker Compose        |
+| API設計      | REST / Swagger (OpenAPI 2.0)   |
+| テスト       | Go標準 + Testify               |
+| CI/CD        | GitHub Actions（導入予定）     |
+| IaC          | Terraform（導入予定）          |
 
 
-## 🚀 現在の実装機能
+## 🧪 実装済みAPI
 
 ### ✅ POST `/api/v1/shorten`
 
 **URLを短縮するAPI**
 
 #### 📥 リクエスト
-
 ```json
 {
   "original_url": "https://example.com"
@@ -38,7 +53,7 @@ URL短縮サービスをGo（Gin）で構築したポートフォリオ用プロ
 
 ### ✅ GET `/:code`
 
-**短縮URLにアクセスすると元のURLにリダイレクトするAPI**
+**短縮URLにアクセスすると元のURLにリダイレクトします**
 
 #### 📤 レスポンス
 ```
@@ -48,7 +63,7 @@ Location: https://example.com
 
 ## 📚 APIドキュメント（Swagger）
 
-このAPIは Swagger（OpenAPI） を導入しており、ブラウザ上から仕様を確認できます。
+自動生成されたOpenAPI仕様のSwagger UIが利用可能です。
 
 - Swagger UI: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
 
@@ -62,6 +77,8 @@ Location: https://example.com
 ```bash
 swag init --dir ./cmd/server,./internal/interface/handler/http --output ./docs --parseDependency --parseInternal
 ```
+
+
 
 ## 🛠 ローカル環境構築
 ```
@@ -79,25 +96,64 @@ docker compose up --build
 ## 📁 ディレクトリ構成（抜粋）
 ```
 shorty-link/
-├── cmd/                    # エントリポイント
-├── internal/              # アプリケーション本体（クリーンアーキテクチャ）
-│   ├── config/            # DB設定
-│   ├── domain/            # エンティティ、リポジトリインターフェース
-│   ├── usecase/           # インターフェース、DTO、ユースケース
-│   ├── presenter/         # プレゼンター（出力変換）
-│   ├── interface/handler/ # Ginハンドラ（API定義）
-│   └── infrastructure/db/ # MySQL + GORMモデル
-├── docker/                # Dockerfileなど
+├── cmd/                    # エントリポイント（main）
+├── internal/              # アプリ本体（クリーンアーキテクチャ）
+│   ├── config/            # DB接続設定
+│   ├── domain/            # エンティティ、リポジトリIF
+│   ├── usecase/           # 入出力DTO、ユースケース、IF
+│   ├── presenter/         # 出力整形ロジック
+│   ├── interface/handler/ # Ginハンドラ層
+│   └── infrastructure/db/ # GORMモデル、MySQL実装
+├── docs/                  # Swagger生成ファイル
+├── docker/                # Dockerfile
 ├── docker-compose.yml
 └── README.md
 ```
 
+## 🗂 データ構造と設計図
+#### 🧑‍🏫 ユースケース図（Mermaid）
+```mermaid
+graph TD
+  User[ユーザー] -->|POST /api/v1/shorten| ShortenAPI[短縮URL生成API]
+  User -->|GET /:code| RedirectAPI[リダイレクトAPI]
+
+  ShortenAPI --> DB[(MySQL)]
+  RedirectAPI --> DB
+```
+
+#### 🗄 ER図（Mermaid）
+```mermaid
+erDiagram
+    SHORT_URLS {
+        uint ID PK "主キー"
+        string Code "短縮されたコード（ユニーク）"
+        string OriginalURL "元のURL"
+        datetime CreatedAt "作成日時（自動）"
+    }
+```
+
+## 🧪 テスト
+```
+# 全テスト実行
+go test ./...
+
+# 特定ファイルのテスト実行
+go test ./internal/usecase/shorturl
+```
+
+✅ UseCase（Interactor）に対するテスト実装済み
+
+✅ Presenterの出力変換ロジックのテストあり
+
+✅ Handler層のGinルーティング含む統合テストも実施可能
+
 ## 🧪 今後の実装予定（TODO）
-- URLの有効期限の設定
-- アクセスログの保存
-- CI/CD（GitHub Actions）
-- Terraformによるインフラ構築
-- 短縮URLのカスタムエイリアス対応
+- カスタム短縮コード対応（任意エイリアス）
+- URLの有効期限設定（TTL）
+- アクセスログ記録（日時/IP/UAなど）
+- アクセス分析API（クリック数の集計）
+- GitHub ActionsによるCI/CDパイプライン
+- TerraformによるIaC構築とCloud環境デプロイ
 
 
 ## 🧑‍💻 開発者
@@ -105,7 +161,7 @@ Shimon Iwata
 
 GitHub: [@SI-Monxy](https://github.com/SI-Monxy)
 
-X: [@SI-Monxy](https://x.com/SI_Monxy)
+X (旧Twitter): [@SI-Monxy](https://x.com/SI_Monxy)
 
 ## 📄 ライセンス
 MIT License
