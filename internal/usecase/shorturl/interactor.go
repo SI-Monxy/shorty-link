@@ -9,12 +9,13 @@ import (
 
 // Interactor（ビジネスロジック実装）
 type Interactor struct {
-	repo domain.Repository
-	pres OutputPort
+	repo    domain.Repository
+	pres    OutputPort
+	baseURL string
 }
 
-func NewInteractor(r domain.Repository, p OutputPort) *Interactor {
-	return &Interactor{repo: r, pres: p}
+func NewInteractor(r domain.Repository, p OutputPort, baseURL string) *Interactor {
+	return &Interactor{repo: r, pres: p, baseURL: baseURL}
 }
 
 func (i *Interactor) Shorten(input ShortenInput) (*ShortenOutput, error) {
@@ -26,7 +27,7 @@ func (i *Interactor) Shorten(input ShortenInput) (*ShortenOutput, error) {
 	if err := i.repo.Save(entity); err != nil {
 		return nil, err
 	}
-	output := &ShortenOutput{ShortURL: fmt.Sprintf("http://%s", code)}
+	output := &ShortenOutput{ShortURL: fmt.Sprintf("%s/%s", i.baseURL, code)}
 	return i.pres.PresentShorten(output), nil
 }
 

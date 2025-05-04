@@ -48,7 +48,7 @@ func TestShortenAPI(t *testing.T) {
 
 	repo := &mockRepo{}
 	pres := &mockPresenter{}
-	uc := usecase.NewInteractor(repo, pres)
+	uc := usecase.NewInteractor(repo, pres, "http://localhost:8080")
 	h := NewShortURLHandler(uc)
 
 	r := gin.Default()
@@ -71,7 +71,7 @@ func TestRedirectAPI(t *testing.T) {
 
 	repo := &mockRepo{}
 	pres := &mockPresenter{}
-	uc := usecase.NewInteractor(repo, pres)
+	uc := usecase.NewInteractor(repo, pres, "http://localhost:8080")
 	h := NewShortURLHandler(uc)
 
 	r := gin.Default()

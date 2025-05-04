@@ -36,7 +36,7 @@ func main() {
 	// DI (依存性注入)
 	repo := mysql.NewShortURLRepository(db)
 	pres := presenter.NewShortURLPresenter()
-	uc := shorturl.NewInteractor(repo, pres)
+	uc := shorturl.NewInteractor(repo, pres, "http://localhost:8080")
 	h := handler.NewShortURLHandler(uc)
 
 	// ルーティング登録

@@ -40,13 +40,13 @@ func TestInteractor_Shorten(t *testing.T) {
 		},
 	}
 	mockP := &mockPresenter{}
-	uc := usecase.NewInteractor(mockR, mockP)
+	uc := usecase.NewInteractor(mockR, mockP, "http://localhost:8080")
 
 	input := usecase.ShortenInput{OriginalURL: "https://example.com"}
 	output, err := uc.Shorten(input)
 
 	assert.NoError(t, err)
-	assert.Contains(t, output.ShortURL, "http://")
+	assert.Contains(t, output.ShortURL, "http://localhost:8080/")
 }
 
 func TestInteractor_Redirect(t *testing.T) {
@@ -56,7 +56,7 @@ func TestInteractor_Redirect(t *testing.T) {
 		},
 	}
 	mockP := &mockPresenter{}
-	uc := usecase.NewInteractor(mockR, mockP)
+	uc := usecase.NewInteractor(mockR, mockP, "http://localhost:8080")
 
 	input := usecase.RedirectInput{Code: "abc123"}
 	output, err := uc.Redirect(input)

@@ -45,14 +45,14 @@
 #### 📥 リクエスト
 ```json
 {
-  "original_url": "https://example.com"
+  "original_url": "http://example.com"
 }
 ```
 
 #### 📤 レスポンス
 ``` json
 {
-  "short_url": "http://localhost:8080/abc123"
+  "short_url": "http://your-domain.com/abc123"
 }
 ```
 
