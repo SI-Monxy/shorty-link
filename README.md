@@ -18,7 +18,7 @@
 - ✅ ユニットテスト対応（UseCase／Presenter）
 - ✅ Docker Composeで即時ローカル起動
 - ✅ GitHub ActionsによるCI/CDパイプライン
-- 🔜 TerraformによるIaC構築
+- ✅ TerraformによるIaC構築
 
 ## ⚙️ 使用技術
 
@@ -109,6 +109,11 @@ shorty-link/
 │   ├── presenter/         # 出力整形ロジック
 │   ├── interface/handler/ # Ginハンドラ層
 │   └── infrastructure/db/ # GORMモデル、MySQL実装
+├── terraform/             # IaC（AWSリソース定義、モジュール分割）
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── dev.tfvars
+│   └── modules/
 ├── docs/                  # Swagger生成ファイル
 ├── docker/                # Dockerfile
 ├── docker-compose.yml
@@ -150,6 +155,18 @@ go test ./internal/usecase/shorturl
 - ✅ Presenterの出力変換ロジックのテストあり
 - ✅ Handler層のGinルーティング含む統合テストも実施可能
 
+## ☁️ クラウドデプロイ & IaC（Terraform）
+本プロジェクトはAWS上に以下の構成でデプロイ可能です。
+
+インフラは全てTerraformでコード管理されています。
+
+- ECS (Fargate): アプリケーションコンテナのデプロイ
+- RDS (MySQL): 永続DB
+- ALB: 外部公開用ロードバランサ
+- ECR: Dockerイメージのリポジトリ
+- Secrets Manager: DBパスワード等の管理
+- VPC/サブネット/セキュリティグループ: AWSネットワーク設計
+
 ## 🔁 CI/CD
 
 本プロジェクトでは GitHub Actions による継続的インテグレーションを導入しています。
@@ -161,12 +178,14 @@ go test ./internal/usecase/shorturl
 ワークフローは `.github/workflows` ディレクトリに格納されています。
 
 ## 🧪 今後の実装予定（TODO）
+- HTTPS対応
+- 本番環境と開発環境の分離
+- 自動デプロイ
+- 監視・アラートの整備
 - カスタム短縮コード対応（任意エイリアス）
 - URLの有効期限設定（TTL）
 - アクセスログ記録（日時/IP/UAなど）
 - アクセス分析API（クリック数の集計）
-- TerraformによるIaC構築とCloud環境デプロイ
-
 
 ## 🧑‍💻 開発者
 Shimon Iwata
