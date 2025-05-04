@@ -26,6 +26,11 @@ func main() {
 	db := config.NewDB()
 
 	r := gin.Default()
+
+	r.GET("/", func(c *gin.Context) {
+		c.String(200, "OK")
+	})
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// DI (依存性注入)
