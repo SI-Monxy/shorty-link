@@ -1,7 +1,9 @@
 package config
 
 import (
+	"fmt"
 	"log"
+	"os"
 	"shorty-link/internal/infrastructure/db/model"
 	"time"
 
@@ -10,7 +12,16 @@ import (
 )
 
 func NewDB() *gorm.DB {
-	dsn := "root:password@tcp(mysql:3306)/shorty?charset=utf8mb4&parseTime=True&loc=Local"
+	// 環境変数から取得
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		user, password, host, port, dbname,
+	)
 
 	var db *gorm.DB
 	var err error
