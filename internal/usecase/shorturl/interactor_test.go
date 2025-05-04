@@ -46,7 +46,7 @@ func TestInteractor_Shorten(t *testing.T) {
 	output, err := uc.Shorten(input)
 
 	assert.NoError(t, err)
-	assert.Contains(t, output.ShortURL, "http://localhost:8080/")
+	assert.Contains(t, output.ShortURL, "http://")
 }
 
 func TestInteractor_Redirect(t *testing.T) {

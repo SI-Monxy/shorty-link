@@ -26,7 +26,7 @@ func (i *Interactor) Shorten(input ShortenInput) (*ShortenOutput, error) {
 	if err := i.repo.Save(entity); err != nil {
 		return nil, err
 	}
-	output := &ShortenOutput{ShortURL: fmt.Sprintf("http://localhost:8080/%s", code)}
+	output := &ShortenOutput{ShortURL: fmt.Sprintf("http://%s", code)}
 	return i.pres.PresentShorten(output), nil
 }
 
